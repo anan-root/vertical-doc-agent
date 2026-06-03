@@ -39,6 +39,9 @@ coverage/
 *.tmp
 *.log
 
+# 私有文档、面试材料、trace、设计记录等不进入公开仓库
+/docs/
+
 # 用户上传/生成的文档与素材，禁止直接进入 Git
 *.docx
 *.doc
