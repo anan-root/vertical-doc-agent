@@ -1,0 +1,133 @@
+services:
+  backend:
+    build:
+      context: .
+      dockerfile: Dockerfile.backend
+    container_name: construction-bidding-backend
+    environment:
+      API_KEY: ${API_KEY:-}
+      BASE_URL: ${BASE_URL:-https://api.deepseek.com}
+      MODEL: ${MODEL:-deepseek-v4-flash}
+      LLM_PROVIDER: ${LLM_PROVIDER:-deepseek}
+      API_TYPE: ${API_TYPE:-chat_completions}
+      TEMPERATURE: ${TEMPERATURE:-0}
+      TOP_P: ${TOP_P:-1}
+      MAX_TOKENS: ${MAX_TOKENS:-}
+      TIMEOUT_SECONDS: ${TIMEOUT_SECONDS:-180}
+      MAX_RETRIES: ${MAX_RETRIES:-2}
+      MAX_WORKERS: ${MAX_WORKERS:-8}
+      LLM_TASK_PROFILES_PATH: ${LLM_TASK_PROFILES_PATH:-configs/llm-task-profiles.json}
+      STRUCTURED_OUTPUT_TYPE: ${STRUCTURED_OUTPUT_TYPE:-json_object}
+      ENABLE_THINKING: ${ENABLE_THINKING:-false}
+      REASONING_EFFORT: ${REASONING_EFFORT:-none}
+      STORE_RESPONSE: ${STORE_RESPONSE:-false}
+      APP_ENV: ${APP_ENV:-docker}
+      APP_SECRET_KEY: ${APP_SECRET_KEY:-change-me}
+      DATABASE_URL: postgresql://${POSTGRES_USER:-postgres}:${POSTGRES_PASSWORD:-postgres}@postgres:5432/${POSTGRES_DB:-construction_bidding_agent}
+      APP_STORAGE_ROOT: /app/data
+      APP_MIGRATIONS_DIR: /app/migrations
+      APP_PUBLIC_URL: ${APP_PUBLIC_URL:-http://localhost}
+      BACKEND_INTERNAL_URL: http://backend:8000
+      ONLYOFFICE_PUBLIC_URL: ${ONLYOFFICE_PUBLIC_URL:-http://localhost/onlyoffice}
+      ONLYOFFICE_INTERNAL_URL: http://onlyoffice
+      REDIS_URL: ${REDIS_URL:-redis://redis:6379/0}
+    volumes:
+      - app_data:/app/data
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    ports:
+      - "${BACKEND_PORT:-8000}:8000"
+    healthcheck:
+      test:
+        [
+          "CMD",
+          "python",
+          "-c",
+          "import urllib.request; urllib.request.urlopen('http://localhost:8000/api/v1/health', timeout=5).read()",
+        ]
+      interval: 20s
+      timeout: 5s
+      retries: 10
+
+  postgres:
+    image: postgres:16-alpine
+    container_name: construction-bidding-postgres
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB:-construction_bidding_agent}
+      POSTGRES_USER: ${POSTGRES_USER:-postgres}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-postgres}
+    ports:
+      - "${POSTGRES_PORT:-5432}:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-postgres} -d ${POSTGRES_DB:-construction_bidding_agent}"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+
+  redis:
+    image: redis:7-alpine
+    container_name: construction-bidding-redis
+    ports:
+      - "${REDIS_PORT:-6379}:6379"
+    volumes:
+      - redis_data:/data
+    command: ["redis-server", "--appendonly", "yes"]
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+
+  migrate:
+    build:
+      context: .
+      dockerfile: Dockerfile.backend
+    container_name: construction-bidding-migrate
+    environment:
+      DATABASE_URL: postgresql://${POSTGRES_USER:-postgres}:${POSTGRES_PASSWORD:-postgres}@postgres:5432/${POSTGRES_DB:-construction_bidding_agent}
+      APP_MIGRATIONS_DIR: /app/migrations
+    command: ["python", "scripts/manage_db.py", "--apply"]
+    depends_on:
+      postgres:
+        condition: service_healthy
+    profiles:
+      - migrate
+
+  onlyoffice:
+    image: onlyoffice/documentserver:8.3
+    container_name: construction-bidding-onlyoffice
+    environment:
+      JWT_ENABLED: ${ONLYOFFICE_JWT_ENABLED:-false}
+      JWT_SECRET: ${ONLYOFFICE_JWT_SECRET:-}
+    volumes:
+      - onlyoffice_data:/var/www/onlyoffice/Data
+      - onlyoffice_logs:/var/log/onlyoffice
+      - onlyoffice_lib:/var/lib/onlyoffice
+    ports:
+      - "${ONLYOFFICE_PORT:-8082}:80"
+
+  nginx:
+    image: nginx:1.27-alpine
+    container_name: construction-bidding-nginx
+    depends_on:
+      backend:
+        condition: service_healthy
+      onlyoffice:
+        condition: service_started
+    ports:
+      - "${APP_PORT:-80}:80"
+    volumes:
+      - ./deploy/nginx/default.conf:/etc/nginx/conf.d/default.conf:ro
+
+volumes:
+  postgres_data:
+  redis_data:
+  app_data:
+  onlyoffice_data:
+  onlyoffice_logs:
+  onlyoffice_lib:

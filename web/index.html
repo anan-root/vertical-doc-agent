@@ -1,0 +1,1096 @@
+﻿<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>智标工坊 · AI 技术标编制工作台</title>
+    <link rel="stylesheet" href="/static/styles.css?v=20260525-platform-shell-5" />
+  </head>
+  <body>
+    <section id="auth-screen" class="auth-screen">
+      <div class="auth-shell">
+        <div class="auth-brand">
+          <div class="auth-logo-block">
+            <span class="brand-mark auth-brand-mark">智标</span>
+            <span class="auth-logo-chip">AI BID</span>
+          </div>
+          <div class="auth-brand-copy">
+            <strong>智标工坊</strong>
+            <small>AI 技术标编制工作台</small>
+            <p>让评分点、目录、正文和复核有迹可循。</p>
+            <ul>
+              <li>五步推进技术标初稿</li>
+              <li>参考资料可查，风险可复核</li>
+              <li>面向工程企业的轻量 AI 工作台</li>
+            </ul>
+          </div>
+        </div>
+        <div class="auth-card">
+          <div class="auth-tabs">
+            <button id="auth-login-tab" class="active" type="button">登录</button>
+            <button id="auth-register-tab" type="button">注册</button>
+          </div>
+          <form id="login-form" class="auth-form">
+            <label>账号 <input name="username" required autocomplete="username" placeholder="请输入账号" /></label>
+            <label>密码 <input name="password" required type="password" autocomplete="current-password" placeholder="请输入密码" /></label>
+            <button type="submit">进入工作台</button>
+          </form>
+          <form id="register-form" class="auth-form hidden">
+            <label>账号 <input name="username" required autocomplete="username" placeholder="例如 zhangsan" /></label>
+            <label>姓名 <input name="display_name" required placeholder="张三" /></label>
+            <label>密码 <input name="password" required type="password" autocomplete="new-password" placeholder="至少 8 位" /></label>
+            <label>部门 <input name="department" placeholder="投标管理部" /></label>
+            <button type="submit">注册并进入</button>
+          </form>
+          <p id="auth-message" class="auth-message">请输入企业内部分配的账号和密码。</p>
+        </div>
+      </div>
+    </section>
+    <aside class="sidebar">
+      <div class="brand">
+        <span class="brand-mark"><i>智</i><b>标</b></span>
+        <div class="brand-copy">
+          <strong>智标工坊</strong>
+          <small>智能招投标平台</small>
+        </div>
+        <button id="sidebar-collapse-toggle" class="sidebar-toggle" type="button" title="收起侧边栏" aria-label="收起侧边栏">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 6 9 12l6 6"/><path d="M19 4v16"/></svg>
+        </button>
+      </div>
+      <nav class="platform-nav">
+        <div class="nav-group">
+          <span class="nav-group-title">智能中台</span>
+          <button class="nav-item active" data-view="home" title="平台首页">
+            <span class="nav-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24"><path d="M4 10.5 12 4l8 6.5V20a1 1 0 0 1-1 1h-5v-6h-4v6H5a1 1 0 0 1-1-1Z"/><path d="M9 21v-6h6v6"/></svg>
+            </span>
+            <span class="nav-label">平台首页</span>
+          </button>
+          <button class="nav-item" data-view="qa" title="智能问答">
+            <span class="nav-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24"><path d="M5 6.5A3.5 3.5 0 0 1 8.5 3h7A3.5 3.5 0 0 1 19 6.5v4A3.5 3.5 0 0 1 15.5 14H11l-4.5 4v-4A3.5 3.5 0 0 1 3 10.5v-4Z"/><path d="M9 7.5h6"/><path d="M9 10.5h3.5"/></svg>
+            </span>
+            <span class="nav-label">智能问答</span>
+          </button>
+          <button class="nav-item" data-view="bid-intel" title="标讯情报">
+            <span class="nav-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24"><path d="M5 4h10l4 4v12H5Z"/><path d="M14 4v5h5"/><path d="M8 13h8"/><path d="M8 17h5"/></svg>
+            </span>
+            <span class="nav-label">标讯情报</span>
+          </button>
+          <button class="nav-item" data-view="risk" title="企业风险">
+            <span class="nav-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24"><path d="M12 3 20 6v5c0 5-3.4 8.6-8 10-4.6-1.4-8-5-8-10V6Z"/><path d="M12 8v5"/><path d="M12 16h.01"/></svg>
+            </span>
+            <span class="nav-label">企业风险</span>
+          </button>
+        </div>
+        <div class="nav-group">
+          <span class="nav-group-title">投标能力</span>
+          <button class="nav-item" data-view="suppliers" title="供应商推荐">
+            <span class="nav-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24"><path d="M4 19V8l8-4 8 4v11"/><path d="M8 19v-7h8v7"/><path d="M10 15h4"/><path d="M3 19h18"/></svg>
+            </span>
+            <span class="nav-label">供应商推荐</span>
+          </button>
+          <button class="nav-item" data-view="rag" title="投标知识库">
+            <span class="nav-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24"><ellipse cx="12" cy="5.5" rx="7" ry="3"/><path d="M5 5.5v6c0 1.7 3.1 3 7 3s7-1.3 7-3v-6"/><path d="M5 11.5v6c0 1.7 3.1 3 7 3s7-1.3 7-3v-6"/></svg>
+            </span>
+            <span class="nav-label">投标知识库</span>
+          </button>
+          <button class="nav-item" data-view="templates" title="投标模板">
+            <span class="nav-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24"><rect x="4" y="4" width="16" height="16" rx="2"/><path d="M8 8h8"/><path d="M8 12h8"/><path d="M8 16h5"/></svg>
+            </span>
+            <span class="nav-label">投标模板</span>
+          </button>
+          <button class="nav-item" data-view="projects" title="技术标编制">
+            <span class="nav-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24"><path d="M4 7.5h5.2l1.7 2H20v8.8a2.2 2.2 0 0 1-2.2 2.2H6.2A2.2 2.2 0 0 1 4 18.3Z"/><path d="M4 7.5V5.7a2.2 2.2 0 0 1 2.2-2.2h3.5l1.7 2H18a2 2 0 0 1 2 2v2"/></svg>
+            </span>
+            <span class="nav-label">技术标编制</span>
+          </button>
+        </div>
+        <div class="nav-group nav-group-admin">
+          <span class="nav-group-title">系统管理</span>
+          <button class="nav-item admin-only admin-hidden-entry hidden" data-view="model" title="系统设置">
+            <span class="nav-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24"><path d="M5 7h14"/><path d="M5 17h14"/><circle cx="9" cy="7" r="2"/><circle cx="15" cy="17" r="2"/></svg>
+            </span>
+            <span class="nav-label">系统设置</span>
+          </button>
+          <button class="nav-item admin-only admin-hidden-entry hidden" data-view="accounts" title="账户管理">
+            <span class="nav-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24"><circle cx="9" cy="8" r="3"/><path d="M4 19c.7-3 2.5-4.5 5-4.5s4.3 1.5 5 4.5"/><path d="M16 11h4"/><path d="M18 9v4"/></svg>
+            </span>
+            <span class="nav-label">账户管理</span>
+          </button>
+        </div>
+      </nav>
+      <div class="system-card hidden">
+        <span id="health-dot" class="dot"></span>
+        <div class="system-card-copy">
+          <strong>后台状态</strong>
+          <small id="health-text">检测中</small>
+        </div>
+      </div>
+    </aside>
+
+    <main>
+      <header class="top-toolbar">
+        <div class="top-project-context">
+          <span class="toolbar-eyebrow">当前项目</span>
+          <strong id="top-project-name">未选择项目</strong>
+          <span id="top-project-meta">选择项目后展示类型与阶段</span>
+        </div>
+        <label class="toolbar-search" aria-label="搜索">
+          <span>⌕</span>
+          <input id="global-search" placeholder="搜索项目、评分点、章节或参考资料" />
+        </label>
+        <div class="toolbar-actions">
+          <button id="top-refresh" class="icon-button subtle-icon" title="刷新" type="button">⟳</button>
+          <span class="toolbar-status hidden"><i id="top-health-dot"></i><span id="top-health-text">系统检测中</span></span>
+          <button id="open-system-settings" class="icon-button subtle-icon admin-only" title="系统设置" type="button">⚙</button>
+          <button id="logout-button" class="user-chip" type="button">退出</button>
+        </div>
+      </header>
+
+      <section id="view-home" class="view active">
+        <header class="page-header">
+          <div>
+            <h1>平台首页</h1>
+            <p>聚合智能问答、标讯情报、风险分析、投标知识库和技术标编制能力。</p>
+          </div>
+          <button class="icon-button" type="button" title="刷新" data-placeholder-refresh>⟳</button>
+        </header>
+        <section class="platform-home-grid">
+          <article class="platform-hero-panel">
+            <span class="ai-kicker">智能招投标平台</span>
+            <h2>让经营线索、风险判断和技术标编制连成一张工作台。</h2>
+            <p>当前版本先保留智标工坊的稳定编标流程，并预留完整招投标问答能力入口。后续同事项目的检索、法规、风险和标讯能力会嫁接到平台 AI 助手。</p>
+            <div class="platform-hero-actions">
+              <button type="button" data-open-view="projects">进入技术标编制</button>
+              <button class="secondary" type="button" data-open-view="qa">打开智能问答</button>
+            </div>
+          </article>
+          <article class="platform-status-panel">
+            <span>当前可用</span>
+            <strong>技术标编制、投标知识库、投标模板</strong>
+            <p>平台级问答、标讯、风险和供应商能力已预留入口，后续接入后端能力后启用。</p>
+          </article>
+        </section>
+        <section class="platform-module-grid">
+          <button type="button" class="platform-module-card" data-open-view="qa">
+            <span>智能问答</span>
+            <strong>多源检索与依据回答</strong>
+            <small>接入后支持历史项目、法规规范、企业风险和实时标讯问答。</small>
+          </button>
+          <button type="button" class="platform-module-card" data-open-view="rag">
+            <span>投标知识库</span>
+            <strong>资料沉淀与检索依据</strong>
+            <small>管理优秀标书、法规、规范、制度和评审办法。</small>
+          </button>
+          <button type="button" class="platform-module-card" data-open-view="projects">
+            <span>技术标编制</span>
+            <strong>五步生成 Word 初稿</strong>
+            <small>上传、解析、目录、正文生成和 Word 复核闭环。</small>
+          </button>
+        </section>
+      </section>
+
+      <section id="view-qa" class="view">
+        <header class="page-header">
+          <div>
+            <h1>智能问答</h1>
+            <p>面向招投标业务的多源问答入口，后续承接同事项目的分类、检索和生成能力。</p>
+          </div>
+          <button class="icon-button" type="button" title="打开助手" data-open-assistant>✦</button>
+        </header>
+        <section class="coming-soon-panel">
+          <span>规划中</span>
+          <h2>平台 AI 助手会在这里回答招投标综合问题。</h2>
+          <p>第一阶段先通过右下角小助手承载问答能力，后续再扩展为完整的智能问答工作区。</p>
+          <button type="button" data-open-assistant>打开平台 AI 助手</button>
+        </section>
+      </section>
+
+      <section id="view-bid-intel" class="view">
+        <header class="page-header">
+          <div>
+            <h1>标讯情报</h1>
+            <p>预留实时标讯检索、公告追踪和机会筛选能力。</p>
+          </div>
+        </header>
+        <section class="coming-soon-panel">
+          <span>待接入</span>
+          <h2>后续接入实时标讯数据源。</h2>
+          <p>计划通过连接器接入标讯 API，支持地区、行业、金额和时间范围筛选。</p>
+        </section>
+      </section>
+
+      <section id="view-risk" class="view">
+        <header class="page-header">
+          <div>
+            <h1>企业风险</h1>
+            <p>预留企业风险、资质核验、经营情况和合规判断能力。</p>
+          </div>
+        </header>
+        <section class="coming-soon-panel">
+          <span>待接入</span>
+          <h2>后续接入企业风险数据源。</h2>
+          <p>小助手会优先展示风险摘要和依据来源，不在前端暴露外部接口细节。</p>
+        </section>
+      </section>
+
+      <section id="view-suppliers" class="view">
+        <header class="page-header">
+          <div>
+            <h1>供应商推荐</h1>
+            <p>预留供应商检索、排序和推荐分析能力。</p>
+          </div>
+        </header>
+        <section class="coming-soon-panel">
+          <span>待接入</span>
+          <h2>后续基于历史项目和企业数据做推荐。</h2>
+          <p>推荐逻辑会保留来源和排序理由，避免只给一个黑盒结论。</p>
+        </section>
+      </section>
+
+      <section id="view-projects" class="view">
+        <header class="page-header">
+          <div>
+            <h1>编标项目</h1>
+            <p>围绕招标文件评分点，完成解析、目录、正文和 Word 初稿闭环。</p>
+          </div>
+          <button id="refresh-projects" class="icon-button" title="刷新">⟳</button>
+        </header>
+
+        <section class="project-shell">
+          <section class="project-command-bar">
+            <div class="project-command-row">
+              <label>
+                项目
+                <select id="project-select"></select>
+              </label>
+              <label>
+                项目类型
+                <span id="selected-project-type" class="readonly-field">未选择</span>
+              </label>
+              <label>
+                当前阶段
+                <span id="selected-project-stage" class="readonly-field">未选择</span>
+              </label>
+              <div class="command-actions">
+                <button id="create-project-toggle" type="button">＋ 新建项目</button>
+                <button id="delete-project" class="danger-button" type="button">删除</button>
+              </div>
+            </div>
+            <form id="project-form" class="quick-create inline-create">
+              <input name="name" required placeholder="新建项目名称" />
+              <select name="project_type">
+                <option value="">自动识别</option>
+                <option value="construction">施工总承包</option>
+                <option value="epc">EPC</option>
+              </select>
+              <button type="submit">新建</button>
+            </form>
+          </section>
+
+          <section class="workspace-panel">
+            <div id="empty-workspace" class="empty-state">
+              <h2>请选择或新建一个项目</h2>
+              <p>进入项目后，可按“上传资料、解析确认、目录确认、正文生成、Word 初稿”的流程推进。</p>
+            </div>
+
+            <div id="project-workspace" class="hidden">
+              <div class="project-overview-card">
+                <div class="project-avatar" aria-hidden="true">▦</div>
+                <div>
+                  <h2 id="active-project-name">未选择项目</h2>
+                  <p id="active-project-meta"></p>
+                </div>
+                <div class="summary-metrics">
+                  <span><i>资料</i><strong id="metric-files">0</strong><em>份</em></span>
+                  <span><i>评分点</i><strong id="metric-score">0</strong><em>个</em></span>
+                  <span><i>复核项</i><strong id="metric-review">0</strong><em>个</em></span>
+                </div>
+              </div>
+
+              <section id="ai-insight-panel" class="ai-insight-panel">
+                <div class="ai-insight-main">
+                  <span class="ai-kicker">AI 编标助手</span>
+                  <h2 id="ai-insight-title">正在读取项目状态</h2>
+                  <p id="ai-insight-text">选择项目后，系统会结合招标解析、目录、参考资料和模板推荐给出下一步建议。</p>
+                  <div class="ai-readiness">
+                    <div class="ai-readiness-head">
+                      <span>编标准备度</span>
+                      <strong id="ai-readiness-score">0%</strong>
+                    </div>
+                    <div class="ai-readiness-bar"><i id="ai-readiness-bar" style="width: 0%"></i></div>
+                  </div>
+                  <div id="ai-insight-chips" class="ai-chip-list"></div>
+                </div>
+                <div class="ai-insight-side">
+                  <span id="ai-insight-stage" class="status-pill pending">等待上下文</span>
+                  <div class="ai-insight-actions">
+                    <button id="ai-go-next-step" type="button">查看建议步骤</button>
+                    <button id="ai-open-assistant" class="secondary" type="button">问问助手</button>
+                  </div>
+                </div>
+              </section>
+
+              <div id="workflow-steps" class="workflow-steps"></div>
+              <section id="workflow-timing-panel" class="workflow-timing-panel hidden">
+                <div class="section-header">
+                  <h2>步骤耗时</h2>
+                  <span id="workflow-timing-status" class="muted">等待记录</span>
+                </div>
+                <div id="workflow-timing-list" class="workflow-timing-list"></div>
+              </section>
+              <div id="stage-banner" class="stage-banner hidden"></div>
+              <div id="job-monitor" class="job-monitor hidden">
+                <div class="section-header">
+                  <h2>最近任务</h2>
+                  <span id="job-monitor-status" class="muted"></span>
+                </div>
+                <div id="latest-jobs" class="job-list"></div>
+              </div>
+
+              <section id="step-upload" class="step-pane active">
+                <div class="split-panel">
+                  <section class="panel compact">
+                    <h2>上传资料</h2>
+                    <form id="upload-form" class="form-grid">
+                      <label>
+                        资料类型
+                        <select name="business_type">
+                          <option value="tender_document">招标文件</option>
+                          <option value="excellent_bid">参考资料</option>
+                          <option value="other">其他资料</option>
+                        </select>
+                      </label>
+                      <label>
+                        文件
+                        <input name="file" type="file" required />
+                      </label>
+                      <button type="submit">上传资料</button>
+                    </form>
+                    <div class="hint-box">
+                      招标文件建议上传 Word + PDF；参考资料进入企业共享资料库，后续生成正文时自动引用。
+                    </div>
+                  </section>
+                  <section class="panel compact">
+                    <div class="section-header">
+                      <h2>已上传资料</h2>
+                      <span id="file-scope" class="muted"></span>
+                    </div>
+                    <div id="files-list" class="list empty">暂无上传文件。</div>
+                  </section>
+                </div>
+              </section>
+
+              <section id="step-parse" class="step-pane">
+                <div class="parse-workbench">
+                  <section class="panel compact parse-score-panel">
+                    <div class="section-header">
+                      <div>
+                        <h2>解析确认 <span class="step-badge">步骤 2 / 5</span></h2>
+                        <p>请逐项确认技术标评分点与要求，确认无误后进入目录生成。</p>
+                      </div>
+                      <div class="button-row tight">
+                        <button id="start-tender-parse" data-job="tender_parse" type="button">启动招标文件解析</button>
+                        <button class="secondary" id="confirm-visible-scores" type="button">批量确认全部</button>
+                      </div>
+                    </div>
+                    <div id="score-points-list" class="score-list"></div>
+                  </section>
+                  <section class="panel compact parse-side-panel">
+                    <h2>人工复核重点</h2>
+                    <div class="review-note">
+                      请先确认技术标评分点是否完整、是否可作为一级目录。确认后再进入目录生成。
+                    </div>
+                    <div id="parse-review-checklist" class="parse-review-checklist"></div>
+                    <div id="parse-artifact-preview" class="hidden"></div>
+                    <pre id="parse-job-output" class="hidden"></pre>
+                  </section>
+                </div>
+              </section>
+
+              <section id="step-outline" class="step-pane">
+                <section class="panel compact outline-workbench">
+                  <div class="section-header">
+                    <div>
+                      <h2>技术标目录树</h2>
+                      <p>一级目录锁定为招标文件技术评分点原文，二三级目录可按编标习惯调整。</p>
+                    </div>
+                    <div class="button-row tight">
+                      <button class="secondary" id="expand-outline" type="button">全部展开</button>
+                      <button class="secondary" id="collapse-outline" type="button">全部折叠</button>
+                      <button class="secondary" id="save-outline" type="button">保存调整</button>
+                      <button class="secondary" data-job="outline_generation">生成目录</button>
+                      <a class="button-link secondary" data-artifact-download="outline">下载目录</a>
+                    </div>
+                  </div>
+                  <div id="outline-preview" class="outline-tree editable"></div>
+                </section>
+              </section>
+
+              <section id="step-generate" class="step-pane">
+                <div class="generation-workbench">
+                  <section class="panel compact generation-unit-panel">
+                    <div class="section-header">
+                      <div>
+                        <h2>生成单元</h2>
+                        <p id="generation-selection-summary" class="muted">请选择要生成的章节。</p>
+                      </div>
+                      <div class="button-row tight">
+                        <button class="secondary small-button" id="select-pending-generation-units" type="button">选择未完成</button>
+                        <button class="secondary small-button" id="select-failed-generation-units" type="button">选择失败</button>
+                        <button class="secondary small-button" id="clear-generation-units" type="button">清空</button>
+                      </div>
+                    </div>
+                    <div id="generation-progress-summary" class="generation-progress-summary"></div>
+                    <div id="generation-units" class="chapter-list"></div>
+                  </section>
+                  <section class="panel compact editor-preview">
+                    <div class="section-header generation-action-header">
+                      <div>
+                        <h2>正文生成</h2>
+                        <p class="muted">先选 1-3 个典型章节试跑；章节已生成后，可只刷新预览和 Word 初稿。</p>
+                      </div>
+                    </div>
+                    <div class="generation-action-bar">
+                      <div class="button-row tight">
+                        <button class="secondary" data-job="chapter_generation" type="button">刷新输入包（不调用大模型）</button>
+                        <button id="generate-selected-chapters" type="button">生成选中章节（调用大模型）</button>
+                        <button id="continue-unfinished-chapters" class="secondary" type="button">继续未完成（调用大模型）</button>
+                        <button id="retry-failed-chapters" class="secondary" type="button">重试失败（调用大模型）</button>
+                        <button id="refresh-word-draft" class="secondary" type="button">刷新 Word 初稿（不调用大模型）</button>
+                        <button id="go-word-review" class="secondary" type="button">进入 Word 初稿</button>
+                      </div>
+                      <div id="generation-run-hint" class="generation-run-hint">
+                        当前真实正文生成并发：配置值 3；选中章节最多使用 3，全量生成最多使用 2。
+                      </div>
+                    </div>
+                    <div id="generation-current-job" class="generation-current-job"></div>
+                    <div id="generation-result-actions" class="artifact-actions wide-actions"></div>
+                    <article id="chapter-preview" class="chapter-preview">
+                      <h3>土建施工方案与技术措施</h3>
+                      <p>本章将结合招标文件技术要求、投标知识库和项目基础信息生成正文、表格、图片引用及人工复核提示。</p>
+                      <p>生成结果会优先保证评分点覆盖完整，再进行图文并茂和 Word 格式优化。</p>
+                    </article>
+                  </section>
+                </div>
+              </section>
+
+              <section id="step-review" class="step-pane">
+                <section class="final-export-shell">
+                  <div class="final-export-status">
+                    <div class="final-export-title">
+                      <h2>Word 初稿</h2>
+                      <p id="word-status-text">正在读取 Word 成稿状态。</p>
+                    </div>
+                    <div class="final-export-metrics" aria-label="Word 初稿统计">
+                      <span><i>正文段落</i><strong id="word-stat-paragraphs">0</strong></span>
+                      <span><i>表格</i><strong id="word-stat-tables">0</strong></span>
+                      <span><i>图片</i><strong id="word-stat-images">0</strong></span>
+                      <span><i>正式标题</i><strong id="word-stat-headings">0</strong></span>
+                    </div>
+                    <div class="word-action-bar">
+                      <button class="secondary" id="word-open-onlyoffice-toc" type="button">更新目录页码</button>
+                      <button class="primary-action" id="word-save-onlyoffice" type="button">保存</button>
+                      <a id="word-download-latest" class="button-link primary-action" href="#">下载 Word</a>
+                      <button class="secondary" id="word-fullscreen-onlyoffice" type="button">全屏预览</button>
+                      <button class="secondary" id="word-toggle-review-drawer" type="button">检查与设置</button>
+                    </div>
+                  </div>
+
+                  <div class="final-export-workbench">
+                    <section class="panel compact onlyoffice-panel">
+                      <div class="section-header">
+                        <div>
+                          <h2>正文预览</h2>
+                          <p>在这里检查目录、正文、表格和图片位置。</p>
+                        </div>
+                        <div class="button-row tight">
+                          <button class="secondary" id="word-open-onlyoffice" type="button">重新加载</button>
+                          <button class="ghost-button" id="word-refresh-summary" type="button">刷新状态</button>
+                        </div>
+                      </div>
+                      <div id="onlyoffice-preview" class="onlyoffice-preview">
+                        <div class="mini-empty">正在准备 OnlyOffice 预览。</div>
+                      </div>
+                    </section>
+
+                    <div id="word-drawer-backdrop" class="review-drawer-backdrop" hidden></div>
+                    <aside class="panel compact final-export-side" id="word-review-drawer" aria-hidden="true">
+                      <div class="review-side-header">
+                        <div>
+                          <h2>检查与设置</h2>
+                          <p>版本、质量摘要和导出格式都在这里调整。</p>
+                        </div>
+                        <button class="icon-button" id="word-close-review-drawer" type="button" title="关闭">×</button>
+                      </div>
+                      <details class="review-accordion" open>
+                        <summary>版本文件</summary>
+                        <div id="word-version-files" class="word-version-files"></div>
+                      </details>
+                      <details class="review-accordion">
+                        <summary>质量摘要</summary>
+                        <div id="word-quality-summary" class="word-quality-summary"></div>
+                      </details>
+                      <details class="review-accordion">
+                        <summary>格式设置</summary>
+                        <form id="word-profile-form" class="word-profile-form">
+                          <div class="profile-section-title">页面</div>
+                          <div class="form-grid compact-grid">
+                            <label>纸张
+                              <select name="page.paper_size">
+                                <option value="A4">A4</option>
+                              </select>
+                            </label>
+                            <label>上边距(cm)<input name="page.top_margin_cm" type="number" step="0.01" /></label>
+                            <label>下边距(cm)<input name="page.bottom_margin_cm" type="number" step="0.01" /></label>
+                            <label>左边距(cm)<input name="page.left_margin_cm" type="number" step="0.01" /></label>
+                            <label>右边距(cm)<input name="page.right_margin_cm" type="number" step="0.01" /></label>
+                            <label>目录级数<input name="toc.levels" type="number" min="1" max="3" /></label>
+                            <label>正文起始页码<input name="toc.body_page_number_start" type="number" min="1" /></label>
+                          </div>
+
+                          <div class="profile-section-title">一级标题</div>
+                          <div class="form-grid compact-grid">
+                            <label>字体<input name="heading_1.font_family" type="text" /></label>
+                            <label>字号(pt)<input name="heading_1.font_size_pt" type="number" step="0.5" /></label>
+                            <label>颜色<input name="heading_1.color" type="text" /></label>
+                            <label>对齐
+                              <select name="heading_1.alignment">
+                                <option value="left">左对齐</option>
+                                <option value="center">居中</option>
+                                <option value="right">右对齐</option>
+                                <option value="justify">两端对齐</option>
+                              </select>
+                            </label>
+                            <label>段前(pt)<input name="heading_1.space_before_pt" type="number" step="0.5" /></label>
+                            <label>段后(pt)<input name="heading_1.space_after_pt" type="number" step="0.5" /></label>
+                            <label class="checkbox-field"><input name="heading_1.bold" type="checkbox" /> 加粗</label>
+                            <label class="checkbox-field"><input name="heading_1.page_break_before" type="checkbox" /> 另起页</label>
+                          </div>
+
+                          <div class="profile-section-title">二级标题</div>
+                          <div class="form-grid compact-grid">
+                            <label>字体<input name="heading_2.font_family" type="text" /></label>
+                            <label>字号(pt)<input name="heading_2.font_size_pt" type="number" step="0.5" /></label>
+                            <label>颜色<input name="heading_2.color" type="text" /></label>
+                            <label>对齐
+                              <select name="heading_2.alignment">
+                                <option value="left">左对齐</option>
+                                <option value="center">居中</option>
+                                <option value="right">右对齐</option>
+                                <option value="justify">两端对齐</option>
+                              </select>
+                            </label>
+                            <label>段前(pt)<input name="heading_2.space_before_pt" type="number" step="0.5" /></label>
+                            <label>段后(pt)<input name="heading_2.space_after_pt" type="number" step="0.5" /></label>
+                            <label class="checkbox-field"><input name="heading_2.bold" type="checkbox" /> 加粗</label>
+                          </div>
+
+                          <div class="profile-section-title">三级标题</div>
+                          <div class="form-grid compact-grid">
+                            <label>字体<input name="heading_3.font_family" type="text" /></label>
+                            <label>字号(pt)<input name="heading_3.font_size_pt" type="number" step="0.5" /></label>
+                            <label>颜色<input name="heading_3.color" type="text" /></label>
+                            <label>对齐
+                              <select name="heading_3.alignment">
+                                <option value="left">左对齐</option>
+                                <option value="center">居中</option>
+                                <option value="right">右对齐</option>
+                                <option value="justify">两端对齐</option>
+                              </select>
+                            </label>
+                            <label>段前(pt)<input name="heading_3.space_before_pt" type="number" step="0.5" /></label>
+                            <label>段后(pt)<input name="heading_3.space_after_pt" type="number" step="0.5" /></label>
+                            <label class="checkbox-field"><input name="heading_3.bold" type="checkbox" /> 加粗</label>
+                          </div>
+
+                          <div class="profile-section-title">正文</div>
+                          <div class="form-grid compact-grid">
+                            <label>字体<input name="body.font_family" type="text" /></label>
+                            <label>字号(pt)<input name="body.font_size_pt" type="number" step="0.5" /></label>
+                            <label>颜色<input name="body.color" type="text" /></label>
+                            <label>对齐
+                              <select name="body.alignment">
+                                <option value="left">左对齐</option>
+                                <option value="center">居中</option>
+                                <option value="right">右对齐</option>
+                                <option value="justify">两端对齐</option>
+                              </select>
+                            </label>
+                            <label>首行缩进字符<input name="body.first_line_indent_chars" type="number" step="0.5" /></label>
+                            <label>行距<input name="body.line_spacing" type="number" step="0.01" /></label>
+                          </div>
+
+                          <div class="profile-section-title">表格</div>
+                          <div class="form-grid compact-grid">
+                            <label>字体<input name="table.font_family" type="text" /></label>
+                            <label>表格字号(pt)<input name="table.font_size_pt" type="number" step="0.5" /></label>
+                            <label>列宽策略
+                              <select name="table.column_width_strategy">
+                                <option value="auto_by_content_type">按内容自动</option>
+                                <option value="balanced">平均分配</option>
+                                <option value="fixed">固定策略</option>
+                              </select>
+                            </label>
+                            <label>最小行高(cm)<input name="table.min_row_height_cm" type="number" step="0.1" /></label>
+                            <label>图片列宽(cm)<input name="table.image_column_width_cm" type="number" step="0.1" /></label>
+                            <label class="checkbox-field"><input name="table.header_bold" type="checkbox" /> 表头加粗</label>
+                          </div>
+
+                          <div class="profile-section-title">图片</div>
+                          <div class="form-grid compact-grid">
+                            <label>图片最大宽度(cm)<input name="image.max_width_cm" type="number" step="0.1" /></label>
+                            <label>图片最大高度(cm)<input name="image.max_height_cm" type="number" step="0.1" /></label>
+                            <label>题注字体<input name="image.caption_font_family" type="text" /></label>
+                            <label>题注字号(pt)<input name="image.caption_font_size_pt" type="number" step="0.5" /></label>
+                            <label>题注对齐
+                              <select name="image.caption_alignment">
+                                <option value="left">左对齐</option>
+                                <option value="center">居中</option>
+                                <option value="right">右对齐</option>
+                              </select>
+                            </label>
+                            <label>多图默认列数<input name="image.multi_image_layout.default_columns" type="number" min="1" max="4" /></label>
+                            <label>多图最大列数<input name="image.multi_image_layout.max_columns" type="number" min="1" max="4" /></label>
+                            <label class="checkbox-field"><input name="image.keep_image_with_caption" type="checkbox" /> 图片与题注同页</label>
+                          </div>
+
+                          <div class="button-row tight profile-actions">
+                            <button type="submit">保存设置</button>
+                            <button class="secondary" id="word-profile-reset" type="button">恢复默认</button>
+                            <button class="secondary" id="word-reexport" type="button">按当前格式重新导出</button>
+                          </div>
+                        </form>
+                      </details>
+                    </aside>
+                  </div>
+                </section>
+              </section>
+            </div>
+          </section>
+        </section>
+      </section>
+
+      <section id="view-rag" class="view">
+        <header class="page-header">
+          <div>
+            <h1>投标知识库</h1>
+            <p>沉淀优秀标书、法律法规、技术规范、企业制度和评审办法，为助手回答和正文生成提供可追溯依据。</p>
+          </div>
+          <div class="button-row tight">
+            <button id="open-excellent-bid-upload">上传智库资料</button>
+            <button id="migrate-library" class="secondary">同步历史索引</button>
+            <button id="refresh-library" class="icon-button" title="刷新">⟳</button>
+          </div>
+        </header>
+
+        <section class="library-summary">
+          <div class="summary-metrics">
+            <span><strong id="library-source-count">0</strong>资料</span>
+            <span><strong id="library-slice-count">0</strong>章节切片</span>
+            <span><strong id="library-table-count">0</strong>表格</span>
+            <span><strong id="library-image-count">0</strong>图片</span>
+            <span><strong id="library-warning-count">0</strong>提示</span>
+          </div>
+          <div id="library-quality-panel" class="library-quality-panel"></div>
+          <div id="library-type-badges" class="library-type-badges"></div>
+          <p id="library-meta" class="muted">正在读取投标知识库。</p>
+        </section>
+
+        <section class="panel">
+          <div class="section-header">
+            <h2>已入库依据资料</h2>
+            <span id="library-status" class="muted"></span>
+          </div>
+          <div id="library-list" class="library-list"></div>
+        </section>
+
+        <section class="knowledge-workbench">
+          <section class="panel compact">
+            <div class="section-header">
+              <h2>智库检索</h2>
+              <span id="material-search-status" class="muted"></span>
+            </div>
+            <form id="material-search-form" class="material-search-form">
+              <input name="query" placeholder="输入关键词，如：模板工程、脚手架、混凝土浇筑、法规条款、评审办法" />
+              <select name="source_bid_id" id="material-search-source">
+                <option value="">全部智库资料</option>
+              </select>
+              <button type="submit">检索智库</button>
+            </form>
+            <div id="material-search-results" class="material-results"></div>
+          </section>
+
+          <section class="panel compact">
+            <div class="section-header">
+              <h2>智库详情</h2>
+              <span id="library-detail-title" class="muted">请选择一份智库资料</span>
+            </div>
+            <div id="library-detail" class="library-detail"></div>
+          </section>
+        </section>
+      </section>
+
+      <dialog id="excellent-bid-upload-dialog" class="modal-dialog">
+        <form id="excellent-bid-upload-form" class="modal-card">
+          <div class="modal-head">
+            <div>
+              <h2>上传智库资料</h2>
+              <p>上传前请确认文件已完成脱敏，系统会自动解析为企业智库资料。</p>
+            </div>
+            <button id="close-excellent-bid-upload" class="icon-button" type="button" title="关闭">×</button>
+          </div>
+          <div class="form-grid">
+            <label class="span-2">选择文件 <input name="file" type="file" accept=".docx" required /></label>
+            <label class="span-2">标书名称 <input name="title" placeholder="默认使用文件名" /></label>
+            <label>
+              智库资料类型
+              <select name="knowledge_type">
+                <option value="excellent_bid">优秀标书</option>
+                <option value="law_regulation">法律法规</option>
+                <option value="technical_standard">技术规范</option>
+                <option value="enterprise_policy">企业制度</option>
+                <option value="review_rule">评审办法</option>
+                <option value="other">其他资料</option>
+              </select>
+            </label>
+            <label>
+              项目类型
+              <select name="project_type" required>
+                <option value="">请选择</option>
+                <option value="building_construction">房建</option>
+                <option value="municipal">市政</option>
+                <option value="highway">公路</option>
+                <option value="water_conservancy">水利</option>
+                <option value="rail_transit">轨道交通</option>
+                <option value="mechanical_electrical">机电</option>
+                <option value="decoration">装饰装修</option>
+                <option value="other">其他</option>
+              </select>
+            </label>
+            <label>
+              资料细分
+              <select name="bid_type">
+                <option value="construction_technical_bid">施工技术标</option>
+                <option value="epc_technical_bid">EPC 技术标</option>
+                <option value="design_scheme">设计方案</option>
+                <option value="construction_organization_design">施工组织设计</option>
+                <option value="other">其他</option>
+              </select>
+            </label>
+            <label class="check-line"><input name="allow_image_reuse" type="checkbox" checked />允许复用其中的通用图片素材</label>
+            <label class="check-line"><input name="desensitized_confirmed" type="checkbox" required />已确认文件完成脱敏</label>
+            <label class="span-2">备注 <textarea name="remarks" rows="3" placeholder="可填写适用范围、项目特点或人工说明"></textarea></label>
+          </div>
+          <div class="modal-actions">
+            <span id="excellent-bid-upload-status" class="muted"></span>
+            <div class="button-row tight">
+              <button class="secondary" id="cancel-excellent-bid-upload" type="button">取消</button>
+              <button type="submit">上传并解析</button>
+            </div>
+          </div>
+        </form>
+      </dialog>
+
+      <section id="view-templates" class="view">
+        <header class="page-header">
+          <div>
+            <h1>投标模板</h1>
+            <p>维护企业标准目录、章节写作重点、表格清单和不同项目类型的模板方案。</p>
+          </div>
+          <div class="button-row tight">
+            <button id="open-bid-template-upload" class="secondary" type="button">上传模板</button>
+            <button id="refresh-bid-templates" class="icon-button" title="刷新">⟳</button>
+          </div>
+        </header>
+
+        <section class="template-workbench">
+          <section class="panel">
+            <div class="section-header">
+              <h2>模板库</h2>
+              <span id="bid-template-status" class="muted">正在读取模板。</span>
+            </div>
+            <form id="bid-template-filter-form" class="template-filter-bar">
+              <input name="query" placeholder="搜索模板、章节、标签或表格" />
+              <select name="project_type">
+                <option value="">全部类型</option>
+                <option value="construction">施工总承包</option>
+                <option value="epc">EPC</option>
+                <option value="general">通用</option>
+              </select>
+              <input name="tag" placeholder="标签筛选" />
+            </form>
+            <div id="bid-template-list" class="template-list"></div>
+          </section>
+
+          <section class="panel compact">
+            <div class="section-header">
+              <h2>模板详情预览</h2>
+              <span id="bid-template-detail-status" class="muted">请选择模板。</span>
+            </div>
+            <div id="bid-template-detail" class="template-detail"></div>
+          </section>
+
+          <section class="panel compact">
+            <div class="section-header">
+              <h2>当前项目适配分析</h2>
+              <span id="bid-template-project-status" class="muted">选择项目后展示推荐。</span>
+            </div>
+            <div id="bid-template-project-recommendations" class="template-recommendation-list"></div>
+          </section>
+        </section>
+      </section>
+
+      <dialog id="bid-template-upload-dialog" class="modal-dialog">
+        <form id="bid-template-upload-form" class="modal-card">
+          <div class="modal-head">
+            <div>
+              <h2>上传投标模板</h2>
+              <p>支持 JSON 结构化模板，或上传 DOCX 后自动解析章节和表格清单。</p>
+            </div>
+            <button id="close-bid-template-upload" class="icon-button" type="button" title="关闭">×</button>
+          </div>
+          <div class="form-grid">
+            <label class="span-2">选择文件 <input name="file" type="file" accept=".json,.docx" required /></label>
+            <label class="span-2">模板名称 <input name="name" placeholder="默认读取文件名或 JSON 内名称" /></label>
+            <label>
+              项目类型
+              <select name="project_type">
+                <option value="construction">施工总承包</option>
+                <option value="epc">EPC</option>
+                <option value="general">通用</option>
+              </select>
+            </label>
+            <label>版本 <input name="version" value="v1" /></label>
+            <label class="span-2">说明 <textarea name="description" rows="3" placeholder="可填写适用场景、企业口径或版本说明"></textarea></label>
+          </div>
+          <div class="modal-actions">
+            <span id="bid-template-upload-status" class="muted">模板只会入库预览，不会覆盖项目内容。</span>
+            <div class="button-row tight">
+              <button class="secondary" id="cancel-bid-template-upload" type="button">取消</button>
+              <button type="submit">上传并解析</button>
+            </div>
+          </div>
+        </form>
+      </dialog>
+
+      <section id="view-model" class="view">
+        <header class="page-header">
+          <div>
+            <h1>系统设置</h1>
+            <p>管理员维护模型服务、账号与基础运行参数；编标人员日常无需进入这里。</p>
+          </div>
+          <div class="button-row tight">
+            <button id="open-account-settings" class="secondary" type="button">账户管理</button>
+            <button id="refresh-model" class="icon-button" title="刷新">⟳</button>
+          </div>
+        </header>
+
+        <section class="settings-summary">
+          <article>
+            <strong>AI 服务</strong>
+            <span>控制解析、目录补强、正文生成和小助手回答的模型连接。</span>
+          </article>
+          <article>
+            <strong>人员账号</strong>
+            <span>维护企业内部使用人员、角色和启停状态。</span>
+          </article>
+          <article>
+            <strong>界面收束</strong>
+            <span>普通编标人员只看到项目、智库、模板和助手。</span>
+          </article>
+        </section>
+
+        <section class="panel">
+          <h2>AI 服务配置</h2>
+          <form id="model-form" class="form-grid model-grid">
+            <label>服务商 <input name="provider" placeholder="deepseek / openai_compatible" /></label>
+            <label>
+              接口类型
+              <select name="api_type">
+                <option value="responses">Responses</option>
+                <option value="chat_completions">Chat Completions</option>
+              </select>
+            </label>
+            <label class="span-2">接口地址 <input name="base_url" placeholder="https://dashscope.aliyuncs.com/compatible-mode/v1" /></label>
+            <label>模型名称 <input name="model" placeholder="qwen3.6-plus" /></label>
+            <label>API 密钥 <input name="api_key" type="password" placeholder="留空则不修改" /></label>
+            <label>温度 <input name="temperature" type="number" step="0.01" /></label>
+            <label>采样概率 Top P <input name="top_p" type="number" step="0.01" /></label>
+            <label>超时时间（秒） <input name="timeout_seconds" type="number" /></label>
+            <label>最大重试 <input name="max_retries" type="number" /></label>
+            <label>默认并发 <input name="max_workers" type="number" /></label>
+            <label>
+              结构化输出
+              <select name="structured_output_type">
+                <option value="">不指定</option>
+                <option value="json_object">JSON 对象</option>
+              </select>
+            </label>
+            <label class="check-line"><input name="enable_thinking" type="checkbox" />启用思考模式</label>
+            <button type="submit">保存配置</button>
+          </form>
+        </section>
+
+        <section class="panel">
+          <div class="section-header">
+            <h2>生成参数</h2>
+            <span id="profile-path" class="muted"></span>
+          </div>
+          <div id="profiles-list" class="profile-grid"></div>
+        </section>
+      </section>
+
+      <section id="view-accounts" class="view">
+        <header class="page-header">
+          <div>
+            <h1>账户管理</h1>
+            <p>管理员维护企业内部使用人员、角色和启停状态。</p>
+          </div>
+          <div class="button-row tight">
+            <button id="back-system-settings" class="secondary" type="button">返回系统设置</button>
+            <button id="refresh-accounts" class="icon-button" title="刷新">⟳</button>
+          </div>
+        </header>
+
+        <section class="account-summary">
+          <div class="summary-metrics">
+            <span><i>总账户</i><strong id="account-total">0</strong><em>个</em></span>
+            <span><i>启用</i><strong id="account-active">0</strong><em>个</em></span>
+            <span><i>停用</i><strong id="account-disabled">0</strong><em>个</em></span>
+          </div>
+        </section>
+
+        <section class="account-workbench">
+          <section class="panel compact">
+            <h2>新增账户</h2>
+            <form id="account-form" class="form-grid compact-grid">
+              <label>账号 <input name="username" required placeholder="zhangsan" /></label>
+              <label>初始密码 <input name="password" required type="password" placeholder="至少 8 位" /></label>
+              <label>姓名 <input name="display_name" required placeholder="张三" /></label>
+              <label>
+                角色
+                <select name="role">
+                  <option value="bid_staff">编标人员</option>
+                  <option value="bid_manager">投标经理</option>
+                  <option value="technical_reviewer">技术负责人</option>
+                  <option value="viewer">只读查看</option>
+                  <option value="admin">系统管理员</option>
+                </select>
+              </label>
+              <label>部门 <input name="department" placeholder="投标管理部" /></label>
+              <label>手机 <input name="phone" placeholder="可选" /></label>
+              <label>邮箱 <input name="email" type="email" placeholder="可选" /></label>
+              <button type="submit">创建账户</button>
+            </form>
+          </section>
+
+          <section class="panel compact">
+            <div class="section-header">
+              <h2>账户列表</h2>
+              <span id="account-status" class="muted">正在读取账户。</span>
+            </div>
+            <div id="account-list" class="account-list"></div>
+          </section>
+        </section>
+      </section>
+    </main>
+
+    <button id="assistant-float-button" class="assistant-float-button" type="button" title="AI 编标助手">
+      <svg class="assistant-float-icon" viewBox="0 0 28 28" aria-hidden="true">
+        <rect x="4.5" y="6" width="16.5" height="13.5" rx="5"></rect>
+        <path d="M9 19.5 7.8 24l4.9-4.5"></path>
+        <path d="M13.1 9.2 14 11.5l2.3.9-2.3.9-.9 2.3-.9-2.3-2.3-.9 2.3-.9.9-2.3Z"></path>
+        <path d="M21.2 3.8 21.8 5l1.2.6-1.2.6-.6 1.2-.6-1.2-1.2-.6 1.2-.6.6-1.2Z"></path>
+        <path d="M20 16.2h1.5a3 3 0 0 0 3-3V11"></path>
+      </svg>
+      <span class="assistant-float-dot"></span>
+    </button>
+    <aside id="assistant-dock" class="assistant-dock hidden" aria-label="AI 助手">
+      <div class="assistant-dock-head">
+        <div>
+          <strong>AI 编标助手</strong>
+          <small id="assistant-context-label">围绕当前项目回答</small>
+        </div>
+        <button id="assistant-close" class="icon-button" type="button" title="收起助手">×</button>
+      </div>
+      <section class="assistant-dock-summary">
+        <div class="section-header">
+          <h2>项目摘要</h2>
+          <div class="assistant-sync-tools">
+            <span id="assistant-sync-label">尚未同步</span>
+            <button id="refresh-ai-assistant" class="secondary small-button" type="button">刷新</button>
+          </div>
+        </div>
+        <p id="ai-summary-state">选择项目后生成摘要。</p>
+        <p id="ai-summary-text" class="ai-summary-text">助手可随时隐藏或展开。</p>
+        <div id="assistant-page-advice" class="assistant-page-advice"></div>
+        <div id="ai-summary-risks" class="ai-chip-list"></div>
+      </section>
+      <div class="assistant-quick-actions">
+        <button type="button" data-assistant-prompt="这个项目下一步应该做什么？">下一步</button>
+        <button type="button" data-assistant-prompt="当前有哪些需要人工注意的风险？">风险</button>
+        <button type="button" data-assistant-prompt="当前评分点响应情况怎么样？">评分点响应</button>
+        <button type="button" data-assistant-prompt="生成 AI 复核报告摘要。">AI 复核报告</button>
+        <button type="button" data-assistant-prompt="结合参考资料里的法规和规范，当前项目有哪些合规风险？">合规</button>
+        <button type="button" data-assistant-prompt="当前项目推荐使用哪个投标模板？">模板</button>
+        <button type="button" data-assistant-prompt="当前项目可用的智库依据有哪些？">智库依据</button>
+      </div>
+      <form id="assistant-chat-form" class="assistant-chat-form">
+        <input name="message" placeholder="问问当前步骤要注意什么？" />
+        <button type="submit" title="发送">→</button>
+      </form>
+      <div id="assistant-chat-answer" class="assistant-answer">助手不执行覆盖、删除或发布操作。</div>
+      <div class="assistant-fold-panels" aria-label="助手辅助信息">
+        <details class="assistant-fold-card">
+          <summary class="assistant-card-head">
+            <strong>AI 复核摘要</strong>
+            <span id="assistant-review-level">等待数据</span>
+          </summary>
+          <div id="assistant-review-summary" class="assistant-review-grid"></div>
+        </details>
+        <details class="assistant-fold-card">
+          <summary class="assistant-card-head">
+            <strong>任务状态</strong>
+            <span id="assistant-task-status">空闲</span>
+          </summary>
+          <div id="assistant-task-summary" class="assistant-task-summary"></div>
+        </details>
+        <details class="assistant-fold-card">
+          <summary class="assistant-card-head">
+            <strong>生成小结</strong>
+            <span id="assistant-generation-status">等待生成</span>
+          </summary>
+          <div id="assistant-generation-summary" class="assistant-generation-summary"></div>
+        </details>
+        <details class="assistant-fold-card">
+          <summary class="assistant-card-head">
+            <strong>智库依据</strong>
+            <span id="assistant-rag-status">待检索</span>
+          </summary>
+          <div id="assistant-rag-evidence" class="assistant-rag-evidence"></div>
+        </details>
+        <details class="assistant-fold-card">
+          <summary class="assistant-card-head">
+            <strong>评分点响应看板</strong>
+            <span id="assistant-score-status">待解析</span>
+          </summary>
+          <div id="assistant-score-board" class="assistant-score-board"></div>
+        </details>
+      </div>
+    </aside>
+
+    <div id="toast" class="toast"></div>
+    <script src="/static/app.js?v=20260525-platform-shell-5"></script>
+  </body>
+</html>
+

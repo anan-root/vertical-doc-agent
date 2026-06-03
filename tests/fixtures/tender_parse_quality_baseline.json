@@ -1,0 +1,150 @@
+{
+  "schema_version": "tender_parse_quality_baseline_v0.1",
+  "description": "招标文件解析质量回归基准。首次生成后应由人工复核确认，再作为后续解析质量对比依据。",
+  "sample_count": 3,
+  "samples": [
+    {
+      "file_name": "固始县轴承厂家属院棚户区改造项目.docx",
+      "parse_status": "completed_with_warnings",
+      "project_type": "construction",
+      "can_generate_outline": true,
+      "technical_score_point_count": 13,
+      "technical_bid_requirement_count": 0,
+      "technical_standard_count": 2,
+      "review_item_count": 3,
+      "warning_count": 4,
+      "blocking_warning_count": 0,
+      "project_info_missing_fields": [
+        "construction_scale",
+        "safety_civilization_requirement"
+      ],
+      "score_point_titles": [
+        "内容完整性",
+        "主要施工方案与技术措施",
+        "质量管理体系与措施",
+        "安全管理体系与措施",
+        "文明施工、环境保护管理体系及施工现场扬尘治理措施",
+        "工期保证措施",
+        "拟投入资源配备计划",
+        "施工进度表",
+        "施工总平面布置图",
+        "技术创新的应用实施措施",
+        "采用新工艺、新技术、新设备、新材料、BIM等的程度",
+        "施工现场实施信息化监控和数据处理",
+        "风险管理措施"
+      ],
+      "score_point_original_texts": [
+        "内容完整性",
+        "主要施工方案与技术措施",
+        "质量管理体系与措施",
+        "安全管理体系与措施",
+        "文明施工、环境保护管理体系及施工现场扬尘治理措施",
+        "工期保证措施",
+        "拟投入资源配备计划",
+        "施工进度表",
+        "施工总平面布置图",
+        "技术创新的应用实施措施",
+        "采用新工艺、新技术、新设备、新材料、BIM等的程度",
+        "施工现场实施信息化监控和数据处理",
+        "风险管理措施"
+      ],
+      "score_point_source_ref_count": 13,
+      "score_point_titles_from_original_count": 13
+    },
+    {
+      "file_name": "豫东南高新技术产业开发区生物医药产业园项目（一期）EPC总承包.docx",
+      "parse_status": "completed_with_warnings",
+      "project_type": "epc",
+      "can_generate_outline": true,
+      "technical_score_point_count": 14,
+      "technical_bid_requirement_count": 4,
+      "technical_standard_count": 3,
+      "review_item_count": 6,
+      "warning_count": 4,
+      "blocking_warning_count": 0,
+      "project_info_missing_fields": [
+        "construction_scale",
+        "safety_civilization_requirement"
+      ],
+      "score_point_titles": [
+        "对招标项目的理解",
+        "设计工作目标、设计进度控制、各专业衔接计划",
+        "设计质量保障措施",
+        "主要施工方案与技术措施",
+        "质量保证措施",
+        "安全管理体系与措施",
+        "文明施工、环境保护管理体系及施工现场扬尘治理措施",
+        "工期保证措施",
+        "拟投入资源配备计划",
+        "施工进度表与网络计划图",
+        "施工总平面图布置",
+        "采用新工艺、新技术、新设备、新材料、BIM等的程度",
+        "施工现场实施信息化监控和数据处理",
+        "风险管理措施"
+      ],
+      "score_point_original_texts": [
+        "对招标项目的理解",
+        "设计工作目标、设计进度控制、各专业衔接计划",
+        "设计质量保障措施",
+        "主要施工方案与技术措施",
+        "质量保证措施",
+        "安全管理体系与措施",
+        "文明施工、环境保护管理体系及施工现场扬尘治理措施",
+        "工期保证措施",
+        "拟投入资源配备计划",
+        "施工进度表与网络计划图",
+        "施工总平面图布置",
+        "采用新工艺、新技术、新设备、新材料、BIM等的程度",
+        "施工现场实施信息化监控和数据处理",
+        "风险管理措施"
+      ],
+      "score_point_source_ref_count": 14,
+      "score_point_titles_from_original_count": 14
+    },
+    {
+      "file_name": "实训基地建设项目施工招标文件（二次）.pdf",
+      "parse_status": "completed_with_warnings",
+      "project_type": "construction",
+      "can_generate_outline": true,
+      "technical_score_point_count": 12,
+      "technical_bid_requirement_count": 3,
+      "technical_standard_count": 2,
+      "review_item_count": 4,
+      "warning_count": 2,
+      "blocking_warning_count": 0,
+      "project_info_missing_fields": [
+        "safety_civilization_requirement"
+      ],
+      "score_point_titles": [
+        "主要施工方案与技术措施",
+        "质量管理体系与措施",
+        "安全管理体系与措施",
+        "文明施工、环境保护管理体系及施工现场扬尘治理措施",
+        "工期保证措施",
+        "拟投入资源配备计划措施",
+        "施工进度表与网络计划图",
+        "施工总平面图布置",
+        "建造方式的创新应用实施方案",
+        "采用新工艺、新技术、新设备、 新材料、BIM等的程度",
+        "施工现场实施信息化监控和数据处理",
+        "风险管理措施"
+      ],
+      "score_point_original_texts": [
+        "主要施工方案 与技术措施",
+        "质量管理体系与 措施",
+        "安全管理体系与 措施",
+        "文明施工、环境 保护管理体系及 施工现场扬尘治 理措施",
+        "工期保证措施",
+        "拟投入资源配备 计划措施",
+        "施工进度表与网 络计划图",
+        "施工总平面图布 置",
+        "建造方式的创新 应用实施方案",
+        "采用新工艺、新 技术、新设备、 新材料、BIM等 的程度",
+        "施工现场实施信 息化监控和数据 处理",
+        "风险管理措施"
+      ],
+      "score_point_source_ref_count": 12,
+      "score_point_titles_from_original_count": 12
+    }
+  ]
+}

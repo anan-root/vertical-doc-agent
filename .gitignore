@@ -1,0 +1,69 @@
+# 本地环境变量与密钥
+.env
+.env.*
+!.env.example
+!.env.*.example
+
+# Python 缓存、虚拟环境与构建产物
+__pycache__/
+*.py[cod]
+*$py.class
+.pytest_cache/
+.ruff_cache/
+.mypy_cache/
+.coverage
+htmlcov/
+build/
+dist/
+*.egg-info/
+.venv/
+venv/
+env/
+
+# 前端/Node 依赖与构建缓存（后续前端工程化时使用）
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+.vite/
+.next/
+coverage/
+
+# 运行数据、原始招投标文件、生成结果与本地缓存
+/data/
+/outputs/
+/.tmp/
+/tmp/
+/logs/
+*.tmp
+*.log
+
+# 用户上传/生成的文档与素材，禁止直接进入 Git
+*.docx
+*.doc
+*.pdf
+*.xlsx
+*.xls
+*.pptx
+*.ppt
+*.zip
+*.7z
+*.rar
+
+# 如果确实需要提交小型样例文件，请放到 tests/fixtures 或 docs/examples 后用 force add：
+# git add -f tests/fixtures/sample.docx
+
+# 数据库、缓存与 Docker 本地覆盖文件
+*.db
+*.sqlite
+*.sqlite3
+dump.rdb
+docker-compose.override.yml
+
+# 编辑器、系统文件
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+desktop.ini

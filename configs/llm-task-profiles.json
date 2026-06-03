@@ -1,0 +1,68 @@
+{
+  "schema_version": "llm_task_profiles_v1",
+  "default": {
+    "temperature": 0,
+    "top_p": 1,
+    "max_tokens": null,
+    "timeout_seconds": 180,
+    "max_retries": 2,
+    "max_workers": 1,
+    "api_type": "responses",
+    "structured_output_type": "json_object",
+    "enable_thinking": false,
+    "reasoning_effort": "none",
+    "store_response": false
+  },
+  "tasks": {
+    "project_info_extraction_input": {
+      "temperature": 0,
+      "top_p": 1,
+      "max_tokens": 4096,
+      "timeout_seconds": 240,
+      "max_workers": 3,
+      "structured_output_type": "json_object",
+      "enable_thinking": false,
+      "reasoning_effort": "none"
+    },
+    "score_points_extraction_input": {
+      "temperature": 0,
+      "top_p": 1,
+      "max_tokens": 4096,
+      "timeout_seconds": 180,
+      "max_workers": 3,
+      "structured_output_type": "json_object",
+      "enable_thinking": false,
+      "reasoning_effort": "none"
+    },
+    "technical_requirements_extraction_input": {
+      "temperature": 0,
+      "top_p": 1,
+      "max_tokens": 8192,
+      "timeout_seconds": 300,
+      "max_workers": 3,
+      "structured_output_type": "json_object",
+      "enable_thinking": false,
+      "reasoning_effort": "none"
+    },
+    "outline_refinement": {
+      "temperature": 0.2,
+      "top_p": 0.9,
+      "max_tokens": 4096,
+      "timeout_seconds": 120,
+      "max_workers": 4,
+      "structured_output_type": "json_object",
+      "enable_thinking": false,
+      "reasoning_effort": "none"
+    },
+    "technical_bid_chapter_generation": {
+      "temperature": 0.35,
+      "top_p": 0.9,
+      "max_tokens": 12000,
+      "timeout_seconds": 300,
+      "max_workers": 8,
+      "structured_output_type": "json_object",
+      "enable_thinking": false,
+      "reasoning_effort": "none"
+    }
+  }
+}

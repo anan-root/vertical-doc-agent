@@ -1,0 +1,54 @@
+{
+  "schema_version": "docx_render_profile_v1",
+  "image_layout": {
+    "single_image_max_width_cm": 12.8,
+    "single_image_max_height_cm": 8.5,
+    "grid_cell_max_width_cm": 7.6,
+    "grid_cell_padding_cm": 0.45,
+    "one_column_max_height_cm": 8.5,
+    "two_column_max_height_cm": 6.4,
+    "three_column_max_height_cm": 5.6,
+    "high_detail_keywords": [
+      "节点",
+      "详图",
+      "大样",
+      "剖面",
+      "平立面",
+      "平面图",
+      "立面图",
+      "尺寸",
+      "标注",
+      "布置图",
+      "网络图",
+      "设计图",
+      "配筋图"
+    ],
+    "medium_detail_keywords": [
+      "示意图",
+      "构造",
+      "流程",
+      "控制网",
+      "轴线",
+      "模板",
+      "钢筋",
+      "架体",
+      "支设",
+      "搭设",
+      "做法图"
+    ],
+    "photo_keywords": [
+      "照片",
+      "现场",
+      "实景",
+      "样板",
+      "成品",
+      "浇筑",
+      "振捣",
+      "抹面",
+      "养护",
+      "砌筑",
+      "防水",
+      "涂刷"
+    ]
+  }
+}
